@@ -1,0 +1,16 @@
+﻿<UserControl x:Class="ImageProcess.Emgu.About"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ImageProcess.Emgu"
+             mc:Ignorable="d" 
+             d:DesignHeight="613" d:DesignWidth="1053" x:Name="FaceDetectionPane" MinHeight="613" Height="613" Width="1053" FontSize="14">
+    <Grid>
+        <TextBlock Margin="0 0 0 430" VerticalAlignment="Center" HorizontalAlignment="Center" Height="Auto" Text="简陋的关于页面" FontSize="30" />
+        <TextBlock Margin="0 0 0 280" VerticalAlignment="Center" HorizontalAlignment="Center" Height="Auto" Text="小组成员：盛威、甘延海、丁钦颖" />
+        <TextBlock Margin="20 0 0 230" VerticalAlignment="Center" HorizontalAlignment="Center" Height="Auto" Text="王剑波、邓磊" />
+        <TextBlock Margin="0 50 0 230" VerticalAlignment="Center" HorizontalAlignment="Center" Height="Auto" Text="需要安装 .NET Framework 4.5" />
+        <Image Source="/Assets/Ninja-Cat-Unicorn-sticker.png" Width="300" Height="241" VerticalAlignment="Bottom" Margin="0 0 0 60"/>
+    </Grid>
+</UserControl>

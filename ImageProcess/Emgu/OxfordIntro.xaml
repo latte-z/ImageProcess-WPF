@@ -1,0 +1,54 @@
+﻿<UserControl x:Class="ImageProcess.Emgu.OxfordIntro"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ImageProcess.Emgu"
+             mc:Ignorable="d" 
+             d:DesignHeight="613" d:DesignWidth="1053" x:Name="FaceDetectionPane" MinHeight="613" Height="613" Width="1053" FontSize="14">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        
+        <Image Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" Source="/Assets/Oxford/1.png" />
+        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0 0 0 15" Text="Computer Vision APIs" />
+        <Image Grid.Row="0" Grid.Column="1" VerticalAlignment="Top" Source="/Assets/Oxford/2.png" />
+        <TextBlock Grid.Row="0" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0 0 0 15" Text="Face APIs" />
+        <Image Grid.Row="0" Grid.Column="2" VerticalAlignment="Top" Source="/Assets/Oxford/3.png" />
+        <TextBlock Grid.Row="0" Grid.Column="2" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0 0 0 15" Text="Emotion APIs" />
+        <Image Grid.Row="0" Grid.Column="3" VerticalAlignment="Top" Margin="-2 0 0 0" Source="/Assets/Oxford/4.png" />
+        <TextBlock Grid.Row="0" Grid.Column="3" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0 0 0 15" Text="Video APIs" />
+
+
+        <Image Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" Source="/Assets/Oxford/5.png" />
+        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0 0 0 15" Text="Speech APIs" />
+        <Image Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" Source="/Assets/Oxford/6.png" />
+        <TextBlock Grid.Row="1" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0 0 0 15" Text="Speaker Recognition APIs" />
+        <Image Grid.Row="1" Grid.Column="2" VerticalAlignment="Top" Source="/Assets/Oxford/7.png" />
+        <TextBlock Grid.Row="1" Grid.Column="2" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0 0 0 5" Text="Custom Recognition&#x000A;Intelligent Service APIs" />
+
+        
+        <Image Grid.Row="2" Grid.Column="0" VerticalAlignment="Top" Source="/Assets/Oxford/8.png" />
+        <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0 0 0 15" Text="Spell Check APIs" />
+        <Image Grid.Row="2" Grid.Column="1" VerticalAlignment="Top" Source="/Assets/Oxford/9.png" />
+        <TextBlock Grid.Row="2" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0 0 0 5" Text="Language Understanding&#x000A; Intelligent Service APIs" />
+        <Image Grid.Row="2" Grid.Column="2" VerticalAlignment="Top" Source="/Assets/Oxford/10.png" />
+        <TextBlock Grid.Row="2" Grid.Column="2" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0 0 0 15" Text="Web Language Model APIs" />
+
+        <TextBlock Text="Build more&#x000A;engaging apps" Margin="20 20 0 0" Grid.Row="1" Grid.Column="3" />
+        <TextBlock Text="The easiest-to-use artificial&#x000A;intelligence based vision,speech&#x000A;and language APIs" Margin="20 80 0 0 " Grid.Row="1" Grid.Column="3" />
+
+        <TextBlock Text="Powered By Microsoft" Grid.Row="2" Grid.Column="3" Margin="20 30 20 20" />
+        <Image Source="/Assets/MSFT_logo_png.png" Grid.Row="2" Grid.Column="3" />
+        
+    </Grid>
+</UserControl>

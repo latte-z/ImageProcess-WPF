@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageProcess", "ImageProcess\ImageProcess.csproj", "{3ACF1B1B-11D6-4C2F-9CBF-F3EAEC5CC70C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientLibrary", "ClientLibrary\ClientLibrary.csproj", "{34DAA01D-3F6B-4622-9425-726B0B4A6C78}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicFaceDetect", "DynamicFaceDetect\DynamicFaceDetect.csproj", "{8A270EB9-4940-4D61-A501-AD5E96A5546E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3ACF1B1B-11D6-4C2F-9CBF-F3EAEC5CC70C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3ACF1B1B-11D6-4C2F-9CBF-F3EAEC5CC70C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3ACF1B1B-11D6-4C2F-9CBF-F3EAEC5CC70C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3ACF1B1B-11D6-4C2F-9CBF-F3EAEC5CC70C}.Debug|x86.Build.0 = Debug|Any CPU
+		{3ACF1B1B-11D6-4C2F-9CBF-F3EAEC5CC70C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3ACF1B1B-11D6-4C2F-9CBF-F3EAEC5CC70C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3ACF1B1B-11D6-4C2F-9CBF-F3EAEC5CC70C}.Release|x86.ActiveCfg = Release|Any CPU
+		{3ACF1B1B-11D6-4C2F-9CBF-F3EAEC5CC70C}.Release|x86.Build.0 = Release|Any CPU
+		{34DAA01D-3F6B-4622-9425-726B0B4A6C78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34DAA01D-3F6B-4622-9425-726B0B4A6C78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34DAA01D-3F6B-4622-9425-726B0B4A6C78}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{34DAA01D-3F6B-4622-9425-726B0B4A6C78}.Debug|x86.Build.0 = Debug|Any CPU
+		{34DAA01D-3F6B-4622-9425-726B0B4A6C78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34DAA01D-3F6B-4622-9425-726B0B4A6C78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34DAA01D-3F6B-4622-9425-726B0B4A6C78}.Release|x86.ActiveCfg = Release|Any CPU
+		{34DAA01D-3F6B-4622-9425-726B0B4A6C78}.Release|x86.Build.0 = Release|Any CPU
+		{8A270EB9-4940-4D61-A501-AD5E96A5546E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A270EB9-4940-4D61-A501-AD5E96A5546E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A270EB9-4940-4D61-A501-AD5E96A5546E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8A270EB9-4940-4D61-A501-AD5E96A5546E}.Debug|x86.Build.0 = Debug|Any CPU
+		{8A270EB9-4940-4D61-A501-AD5E96A5546E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A270EB9-4940-4D61-A501-AD5E96A5546E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A270EB9-4940-4D61-A501-AD5E96A5546E}.Release|x86.ActiveCfg = Release|Any CPU
+		{8A270EB9-4940-4D61-A501-AD5E96A5546E}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

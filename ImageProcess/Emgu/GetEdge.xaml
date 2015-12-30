@@ -1,0 +1,69 @@
+﻿<UserControl x:Class="ImageProcess.Emgu.GetEdge"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ImageProcess.Emgu"
+             mc:Ignorable="d" 
+             d:DesignHeight="613" d:DesignWidth="1053" x:Name="FaceDetectionPane" MinHeight="613" Height="613" Width="1053" FontSize="14">
+    <!-- design -->
+    <Grid>
+        <!-- Grid Row&Col Definitions -->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="476" />
+            <ColumnDefinition Width="101" />
+            <ColumnDefinition Width="476" /> 
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="450" />
+            <RowDefinition Height="45" />
+            <RowDefinition Height="118" />
+        </Grid.RowDefinitions>
+        <!-- Right Pic Display -->
+        <Grid Grid.Column="0" Grid.Row="0">
+            <Image x:Name="LeftImageDisplay" Height="456" Width="456" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,10,10,10" Source="/Assets/default.jpg" />
+        </Grid>
+        <Button Grid.Column="0" Grid.Row="1" Content="请选择一张待处理的照片" HorizontalAlignment="Center" VerticalAlignment="Top"  Width="300" Height="35" Background="#2196f3" Foreground="White" BorderBrush="Transparent" Margin="0, 0, 0, 0" Click="LeftImagePicker_Click"/>
+        
+        <!-- 图像处理BTN -->
+        <Grid Grid.Column="1" Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1.5*" />
+                <RowDefinition Height="1.5*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <!-- Canny -->
+            <Button Grid.Row="0" Content="Canny" Margin="0 -100 0 0" Width="90" Height="35" Background="#2196f3" Foreground="White" BorderBrush="Transparent" Click="Canny_Click"></Button>
+            <ComboBox Name="CbCanny" Grid.Row="0" Margin="0 -20 0 0" Loaded="CbCanny_Loaded" Width="90" Height="35" VerticalContentAlignment="Center" Background="#FBC02D" BorderBrush="Transparent"></ComboBox>
+            <TextBlock Grid.Row="0" Text="输入阈值上下限&#x000A;默认{80-200}" FontSize="13" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 50 0 0" Width="90" Height="35" />
+            <TextBox Grid.Row="0" Name="CannyLow" Text="80" Margin="0 110 40 0" Width="40" Height="25" Background="#E91E63" BorderBrush="Transparent" Foreground="White" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" />
+            <TextBox Grid.Row="0" Name="CannyHigh" Text="200" Margin="45 110 0 0" Width="40" Height="25" Background="#E91E63" BorderBrush="Transparent" Foreground="White" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" />
+
+            <Canvas Grid.Row="0" VerticalAlignment="Bottom">
+                <Line Stroke="Gray" StrokeThickness="1" X1="0" Y1="0" X2="100" Y2="0" />
+            </Canvas>
+            <!-- Sobel -->
+            <Button Grid.Row="1" Content="Sobel" Width="90" Height="35" Margin="0 -50 0 40" Background="#2196f3" Foreground="White" BorderBrush="Transparent" Click="Sobel_Click"></Button>
+            <ComboBox Name="CbSobel" Grid.Row="1" Margin="0 -10 0 0" Loaded="CbSobel_Loaded" Width="90" Height="35" VerticalContentAlignment="Center" Background="#FBC02D" BorderBrush="Transparent"></ComboBox>
+            <TextBlock Grid.Row="1" Text="输入xy求导阶数&#x000A;必只有一个非0" FontSize="13" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 60 0 0" Width="90" Height="35" />
+            <TextBox Grid.Row="1" Name="SobelxOrder" Text="1" Margin="0 120 40 0" Width="40" Height="25" Background="#E91E63" BorderBrush="Transparent" Foreground="White" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" />
+            <TextBox Grid.Row="1" Name="SobelyOrder" Text="0" Margin="45 120 0 0" Width="40" Height="25" Background="#E91E63" BorderBrush="Transparent" Foreground="White" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" />
+
+            <Canvas Grid.Row="1" VerticalAlignment="Bottom">
+                <Line Stroke="Gray" StrokeThickness="1" X1="0" Y1="0" X2="100" Y2="0" />
+            </Canvas>
+            <!-- Laplace -->
+            <Button Grid.Row="2" Content="Laplace" Margin="0 0 0 40" Width="90" Height="35" Background="#2196f3" Foreground="White" BorderBrush="Transparent" Click="Laplace_Click"></Button>
+            <ComboBox Name="CbLaplace" Grid.Row="2" Margin="0 40 0 0" Loaded="CbLaplace_Loaded" Width="90" Height="35" VerticalContentAlignment="Center" Background="#FBC02D" BorderBrush="Transparent"></ComboBox>
+        </Grid>
+        
+        <!-- Right Pic Display -->
+        <Grid Grid.Column="2" Grid.Row="0">
+            <Image x:Name="RightImageDisplay" Height="456" Width="456" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,10,10,10" Source="/Assets/default.jpg" />
+        </Grid>
+        <Button Grid.Column="2" Grid.Row="1" Content="保存照片" HorizontalAlignment="Center" VerticalAlignment="Top" Width="300" Height="35" Background="#2196f3" Foreground="White" BorderBrush="Transparent" Margin="0, 0, 0, 0" Click="RightImageSaver_Click"/>
+        
+        <!-- bottom area -->
+        <TextBlock Name="Result" Margin="390 20 20 20" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Text=" " Height="Auto" Width="Auto"/>
+    </Grid>
+</UserControl>

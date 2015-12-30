@@ -1,0 +1,96 @@
+﻿<UserControl x:Class="ImageProcess.Emgu.BasicProcess"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ImageProcess.Emgu"
+             mc:Ignorable="d" 
+             d:DesignHeight="613" d:DesignWidth="1053" x:Name="FaceDetectionPane" MinHeight="613" Height="613" Width="1053" FontSize="14">
+    <Grid>
+        <!-- Grid Row&Col Definitions -->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="476" />
+            <ColumnDefinition Width="101" />
+            <ColumnDefinition Width="476" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="450" />
+            <RowDefinition Height="45" />
+            <RowDefinition Height="118" />
+        </Grid.RowDefinitions>
+        <!-- Right Pic Display -->
+        <Grid Grid.Column="0" Grid.Row="0">
+            <Image x:Name="LeftImageDisplay" Height="456" Width="456" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,10,10,10" Source="/Assets/default.jpg" />
+        </Grid>
+        <Button Grid.Column="0" Grid.Row="1" Content="请选择一张待处理的照片" HorizontalAlignment="Center" VerticalAlignment="Top"  Width="300" Height="35" Background="#2196f3" Foreground="White" BorderBrush="Transparent" Margin="0, 0, 0, 0" Click="LeftImagePicker_Click"/>
+
+        <!-- 图像处理BTN -->
+        <Grid Grid.Column="1" Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!-- SmoothBilatral -->
+            <Button Grid.Row="0" Content="自动HDR" FontSize="13" Margin="0 -70 0 0" Width="90" Height="35" Background="#2196f3" Foreground="White" BorderBrush="Transparent" Click="AutoHDR_Click" ></Button>
+            <TextBlock Grid.Row="0" Text="彩色图OR灰度图&#x000A;彩色图效果不佳" FontSize="12" Margin="0 160 0 0" VerticalAlignment="Top"  HorizontalAlignment="Center" />
+            <Button Grid.Row="0" Content="使用说明" Margin="0 5 0 0" Width="90" Height="30" FontSize="14" Background="#FBC02D" BorderBrush="Transparent" Click="HDRHelp_Click" />
+            <RadioButton Grid.Row="0" x:Name="RadioColor" Content="彩" GroupName="HDR" IsChecked="True" Margin="0 70 40 0" Width="40" Height="25" Foreground="#E91E63" BorderBrush="Transparent" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" />
+            <RadioButton Grid.Row="0" x:Name="RadioGray" Content="灰" GroupName="HDR" Margin="45 70 0 0" Width="40" Height="25" Foreground="#E91E63" BorderBrush="Transparent" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" />
+            
+            <Canvas Grid.Row="0" VerticalAlignment="Bottom">
+                <Line Stroke="Gray" StrokeThickness="1" X1="0" Y1="0" X2="100" Y2="0" />
+            </Canvas>
+
+            <!-- 图像增强 -->
+            <Button Grid.Row="1" Content="鼠标绘图" Margin="0 -40 0 0" Width="90" Height="35" Background="#2196f3" Foreground="White" BorderBrush="Transparent" Click="MousePaint_Click" ></Button>
+            <Button Grid.Row="1" Content="修补" Margin="0 40 0 0" Width="90" Height="35" Background="#2196f3" Foreground="White" BorderBrush="Transparent" Click="Inpaint_Click" ></Button>
+            <Button Grid.Row="1" Content="参数说明" Margin="0 -110 0 0" Width="90" Height="30" FontSize="14" Background="#FBC02D" BorderBrush="Transparent" Click="InpaintHelp_Click" />
+            <TextBox Grid.Row="1" Name="InPaintArgs" Text="3" Margin="0 110 45 0" Width="40" Height="25" Background="#E91E63" BorderBrush="Transparent" Foreground="White" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" />
+            <CheckBox Grid.Row="1" x:Name="RadioExam" Content="演" Margin="50 110 0 0" Width="40" Height="25" Background="#8BC34A" BorderBrush="Transparent" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" />
+
+            <Canvas Grid.Row="1" VerticalAlignment="Bottom">
+                <Line Stroke="Gray" StrokeThickness="1" X1="0" Y1="0" X2="100" Y2="0" />
+            </Canvas>
+            
+            
+            <Button Grid.Row="2" Content="尺寸调整" Margin="0 -90 0 0" Width="90" Height="35" Background="#2196f3" Foreground="White" BorderBrush="Transparent" Click="Resize_Click" ></Button>
+            <TextBlock Grid.Row="2" Text="选择插值方式" Margin="0 55 0 0" VerticalAlignment="Top" HorizontalAlignment="Center" />
+            <TextBox Grid.Row="2" Name="ResizeWidth" Text="200" Margin="0 110 45 0" Width="40" Height="25" Background="#E91E63" BorderBrush="Transparent" Foreground="White" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" />
+            <TextBox Grid.Row="2" Name="ResizeHeight" Text="200" Margin="0 110 -45 0" Width="40" Height="25" Background="#E91E63" BorderBrush="Transparent" Foreground="White" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" />
+            <ComboBox Name="CbResize" Grid.Row="2" Margin="0 40 0 0" Loaded="CbResize_Loaded" Width="90" Height="35" VerticalContentAlignment="Center" Background="#FBC02D" BorderBrush="Transparent"></ComboBox>
+
+
+        </Grid>
+
+        <!-- Right Pic Display -->
+        <Grid Grid.Column="2" Grid.Row="0">
+            <Image x:Name="RightImageDisplay" Height="456" Width="456" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,10,10,10" Source="/Assets/default.jpg" />
+        </Grid>
+        <Button Grid.Column="2" Grid.Row="1" Content="保存照片" HorizontalAlignment="Center" VerticalAlignment="Top" Width="300" Height="35" Background="#2196f3" Foreground="White" BorderBrush="Transparent" Margin="0, 0, 0, 0" Click="RightImageSaver_Click"/>
+
+        <!-- bottom area -->
+        <TextBlock Name="Result" Margin="110 20 20 20" Grid.Row="2" Grid.Column="0" Text=" " Height="Auto" Width="Auto"/>
+        <!-- slider --><!--
+        <StackPanel Grid.Row="2" Grid.Column="2" Margin="20 -5 20 20">
+
+            <UniformGrid Columns="3" Rows="1" Margin="1">
+                <TextBlock Text="{Binding ElementName=KernelSizeX,Path=Minimum}" TextAlignment="Left" />
+                <TextBlock Text="{Binding ElementName=KernelSizeX,Path=Value}" TextAlignment="Center" />
+                <TextBlock Text="{Binding ElementName=KernelSizeX,Path=Maximum}" TextAlignment="Right" />
+            </UniformGrid>
+            <Slider Name="KernelSizeX" IsSnapToTickEnabled="True" TickFrequency="2" Minimum="1" Maximum="255" />
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Grid.Column="2" Margin="20 35 20 20">
+            <UniformGrid Columns="3" Rows="1" Margin="1">
+                <TextBlock Text="{Binding ElementName=KernelSizeY,Path=Minimum}" TextAlignment="Left" />
+                <TextBlock Text="{Binding ElementName=KernelSizeY,Path=Value}" TextAlignment="Center" />
+                <TextBlock Text="{Binding ElementName=KernelSizeY,Path=Maximum}" TextAlignment="Right" />
+            </UniformGrid>
+            <Slider Name="KernelSizeY" IsSnapToTickEnabled="True" TickFrequency="2" Minimum="1" Maximum="255" />
+        </StackPanel>-->
+
+    </Grid>
+</UserControl>
