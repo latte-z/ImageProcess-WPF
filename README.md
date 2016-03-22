@@ -10,7 +10,7 @@
 - ModernUI.WPF.1.0.6
 - Newtonsoft.Json7.0.1
 - Microsoft.ProjectOxford.Face.0.5.0.2
-- EmguCV 2.4.10/3.0.0
+- EmguCV 3.1.0.2282
 
 
 
@@ -33,4 +33,3 @@
   - AutoHDR
   - Inpaint
   - Resize
-    

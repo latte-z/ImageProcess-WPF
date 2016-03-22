@@ -7,6 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="613" d:DesignWidth="1053" x:Name="FaceDetectionPane" MinHeight="613" Height="613" Width="1053" FontSize="14">
     <Grid>
-        <Button Content="打开实时人脸动态检测" HorizontalAlignment="Center" VerticalAlignment="Center"  Width="300" Height="35" Background="#2196f3" Foreground="White" BorderBrush="Transparent" Margin="0, 0, 0, 0" Click="NewProcess_Click"/>
+        <!--<Button Content="打开实时人脸动态检测" HorizontalAlignment="Center" VerticalAlignment="Center"  Width="300" Height="35" Background="#2196f3" Foreground="White" BorderBrush="Transparent" Margin="0, 0, 0, 0" Click="NewProcess_Click"/>-->
+        <Image Name="image1" Width="1053" Height="613"/>
     </Grid>
 </UserControl>

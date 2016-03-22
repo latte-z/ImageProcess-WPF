@@ -69,20 +69,11 @@
     <ApplicationIcon>favicon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Emgu.CV">
-      <HintPath>C:\Emgu\emgucv-windows-universal 3.0.0.2157\bin\Emgu.CV.dll</HintPath>
-      <Aliases>global</Aliases>
-    </Reference>
-    <Reference Include="Emgu.CV.Stitching">
-      <HintPath>C:\Emgu\emgucv-windows-universal 3.0.0.2157\bin\Emgu.CV.Stitching.dll</HintPath>
-    </Reference>
     <Reference Include="Emgu.CV.UI">
-      <HintPath>C:\Emgu\emgucv-windows-universal 3.0.0.2157\bin\Emgu.CV.UI.dll</HintPath>
-      <Aliases>global</Aliases>
+      <HintPath>D:\Dev\EmguCV\libemgucv-windesktop-3.1.0.2282\bin\Emgu.CV.UI.dll</HintPath>
     </Reference>
-    <Reference Include="Emgu.Util">
-      <HintPath>C:\Emgu\emgucv-windows-universal 3.0.0.2157\bin\Emgu.Util.dll</HintPath>
-      <Aliases>global</Aliases>
+    <Reference Include="Emgu.CV.World">
+      <HintPath>D:\Dev\EmguCV\libemgucv-windesktop-3.1.0.2282\bin\Emgu.CV.World.dll</HintPath>
     </Reference>
     <Reference Include="FirstFloor.ModernUI, Version=1.0.6.0, Culture=neutral, PublicKeyToken=2d21ec3cd074c59a, processorArchitecture=MSIL">
       <HintPath>..\packages\ModernUI.WPF.1.0.6\lib\net45\FirstFloor.ModernUI.dll</HintPath>
@@ -269,6 +260,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="favicon.ico" />
+    <Content Include="haarcascade_frontalface_default.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ClientLibrary\ClientLibrary.csproj">

@@ -21,7 +21,6 @@ namespace DynamicFaceDetect
         public FaceDetect()
         {
             InitializeComponent();
-
             capture = new Capture();
             haarCascade = new HaarCascade(@"haarcascade_frontalface_alt_tree.xml");
             timer = new DispatcherTimer();
@@ -32,11 +31,11 @@ namespace DynamicFaceDetect
 
         void timer_Tick(object sender, EventArgs e)
         {
-            Image<Bgr, Byte> currentFrame = capture.QueryFrame();
+            Image<Bgr, byte> currentFrame = capture.QueryFrame();
 
             if (currentFrame != null)
             {
-                Image<Gray, Byte> grayFrame = currentFrame.Convert<Gray, Byte>();
+                Image<Gray, byte> grayFrame = currentFrame.Convert<Gray, byte>();
 
                 var detectedFaces = grayFrame.DetectHaarCascade(haarCascade)[0];
 
