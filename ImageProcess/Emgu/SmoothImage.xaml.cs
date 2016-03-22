@@ -194,23 +194,30 @@ namespace ImageProcess.Emgu
 
         private void LeftImagePicker_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFile = new OpenFileDialog();
-            openFile.InitialDirectory = @"C:\";
-            if (openFile.ShowDialog() == true)
+            try
             {
-                if (openFile.FileName != null)
+                OpenFileDialog openFile = new OpenFileDialog();
+                openFile.InitialDirectory = "C:\\Users\\" + Environment.UserName + "\\Pictures";
+                if (openFile.ShowDialog() == true)
                 {
-                    _leftOriginImage = new Image<Bgr, byte>(openFile.FileName);
-                    LeftImageDisplay.Source = BitmapSourceConvert.ToBitmapSource(_leftOriginImage);
+                    if (openFile.FileName != null)
+                    {
+                        _leftOriginImage = new Image<Bgr, byte>(openFile.FileName);
+                        LeftImageDisplay.Source = BitmapSourceConvert.ToBitmapSource(_leftOriginImage);
+                    }
                 }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("您所选择的文件不合法，请重新选择！", "提示", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
         private void RightImageSaver_Click(object sender, RoutedEventArgs e)
         {
             SaveFileDialog saveFile = new SaveFileDialog();
-            saveFile.InitialDirectory = @"C:\Users\Public\Pictures";
-            saveFile.FileName = "处理后的图片";
+            saveFile.InitialDirectory = "C:\\Users\\" + Environment.UserName + "\\Pictures";
+            saveFile.FileName = "processed image";
             saveFile.Filter = "位图(*.bmp)|*.bmp";
             saveFile.RestoreDirectory = true;
 

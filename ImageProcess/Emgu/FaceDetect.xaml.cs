@@ -16,6 +16,7 @@ namespace ImageProcess.Emgu
 
         private void NewProcess_Click(object sender, RoutedEventArgs e)
         {
+            // To start a new process
             string str = System.Environment.CurrentDirectory;
             ProcessStartInfo psi = new ProcessStartInfo();
             psi.FileName = str + @"/Extra/DynamicFaceDetect.exe";

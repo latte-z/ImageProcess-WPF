@@ -40,6 +40,11 @@ namespace ImageProcess
         public MainWindow()
         {
             InitializeComponent();
+            // Set maximized when start up
+            WindowState = WindowState.Maximized;
+            // Set no taskbar
+            // WindowStyle = WindowStyle.None;
+
             SubscriptionKey = GetSubscriptionKeyFromIsolatedStorage();
 
             AppName = "简易图像处理与人脸识别/比对";
@@ -195,7 +200,7 @@ namespace ImageProcess
             try
             {
                 SaveSubscriptionKeyToIsolatedStorage(SubscriptionKey);
-                MessageBox.Show("您填入的Project Oxford Key已经保存在硬盘中.\n下次您将不需要再次手动输入.", "订阅秘钥");
+                MessageBox.Show("您填入的Project Oxford Key已经保存在硬盘中.\n下次将不需要再次手动输入.", "订阅秘钥");
             }
             catch (System.Exception ex)
             {

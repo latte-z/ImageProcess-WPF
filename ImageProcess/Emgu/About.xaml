@@ -7,10 +7,11 @@
              mc:Ignorable="d" 
              d:DesignHeight="613" d:DesignWidth="1053" x:Name="FaceDetectionPane" MinHeight="613" Height="613" Width="1053" FontSize="14">
     <Grid>
-        <TextBlock Margin="0 0 0 430" VerticalAlignment="Center" HorizontalAlignment="Center" Height="Auto" Text="简陋的关于页面" FontSize="30" />
-        <TextBlock Margin="0 0 0 280" VerticalAlignment="Center" HorizontalAlignment="Center" Height="Auto" Text="小组成员：盛威、甘延海、丁钦颖" />
-        <TextBlock Margin="20 0 0 230" VerticalAlignment="Center" HorizontalAlignment="Center" Height="Auto" Text="王剑波、邓磊" />
-        <TextBlock Margin="0 50 0 230" VerticalAlignment="Center" HorizontalAlignment="Center" Height="Auto" Text="需要安装 .NET Framework 4.5" />
+        <TextBlock Margin="0 0 0 430" VerticalAlignment="Center" HorizontalAlignment="Center" Height="Auto" Text="About" FontSize="30" />
+        <TextBlock Margin="0 50 0 90" VerticalAlignment="Center" HorizontalAlignment="Center" Height="Auto" Text="Thanks for the ModernUI for WPF" FontSize="20" />
+        <TextBlock Margin="0 50 0 160" VerticalAlignment="Center" HorizontalAlignment="Center" Height="Auto" Text="Thanks for the EmguCV Project" FontSize="20" />
+        <TextBlock Margin="0 50 0 230" VerticalAlignment="Center" HorizontalAlignment="Center" Height="Auto" Text="Part of code come from MS Oxford Project" FontSize="20" />
+        <TextBlock Margin="0 50 0 300" VerticalAlignment="Center" HorizontalAlignment="Center" Height="Auto" Text="A simple image process program" FontSize="20" />
         <Image Source="/Assets/Ninja-Cat-Unicorn-sticker.png" Width="300" Height="241" VerticalAlignment="Bottom" Margin="0 0 0 60"/>
     </Grid>
 </UserControl>
