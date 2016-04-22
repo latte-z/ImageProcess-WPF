@@ -202,7 +202,7 @@ namespace ImageProcess.Emgu
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show("您所选择的文件不合法，请重新选择！", "提示", MessageBoxButton.OK, MessageBoxImage.Error);
             }

@@ -17,6 +17,7 @@ namespace ImageProcess.Emgu
     {
         private Capture capture;
         private CascadeClassifier haar;
+        private string picturePath = @"./Assets/default.jpg";
 
         public FaceDetect()
         {
@@ -24,9 +25,9 @@ namespace ImageProcess.Emgu
             InitializeComponent();
             capture = new Capture();
             haar = new CascadeClassifier(@"haarcascade_frontalface_default.xml");
-            capture.ImageGrabbed += new EventHandler(Capture_ImageGrabbed);
-            capture.Start();
         }
+
+        // public string Path { get { return picturePath; } set { picturePath = value; } }
 
         private void Capture_ImageGrabbed(object sender, EventArgs e)
         {
@@ -47,6 +48,20 @@ namespace ImageProcess.Emgu
                 // no gc!
                 // currentFrame.Dispose();
             }
+        }
+
+        private void captureStart_Click(object sender, RoutedEventArgs e)
+        {
+            capture.Start();
+            capture.ImageGrabbed += Capture_ImageGrabbed;
+        }
+
+        private void captureStop_Click(object sender, RoutedEventArgs e)
+        {
+            capture.ImageGrabbed -= Capture_ImageGrabbed;
+            capture.Stop();
+            // reset the default background img
+            image1.Source = ToBitmapSource(new Image<Bgr, byte>(picturePath));
         }
 
         [DllImport("gdi32")]

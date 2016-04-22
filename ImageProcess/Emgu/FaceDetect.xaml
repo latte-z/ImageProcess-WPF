@@ -8,6 +8,8 @@
              d:DesignHeight="613" d:DesignWidth="1053" x:Name="FaceDetectionPane" MinHeight="613" Height="613" Width="1053" FontSize="14">
     <Grid>
         <!--<Button Content="打开实时人脸动态检测" HorizontalAlignment="Center" VerticalAlignment="Center"  Width="300" Height="35" Background="#2196f3" Foreground="White" BorderBrush="Transparent" Margin="0, 0, 0, 0" Click="NewProcess_Click"/>-->
-        <Image Name="image1" Width="1053" Height="613"/>
+        <Image Name="image1" Width="817" Height="613" Margin="-150 0 0 0" Source="/Assets/default.jpg"/>
+        <Button Name="captureStart" Content="开启即时人脸检测" Margin="0 0 20 200" HorizontalAlignment="Right"  Width="150" Height="40" Background="#2196f3" Foreground="White" Click="captureStart_Click" />
+        <Button Name="captureStop" Content="关闭即时人脸检测" Margin="0 0 20 -200" HorizontalAlignment="Right" Width="150" Height="40" Background="#2196f3" Foreground="White" Click="captureStop_Click" />
     </Grid>
 </UserControl>
