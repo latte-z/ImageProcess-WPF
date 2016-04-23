@@ -30,7 +30,7 @@ namespace ImageProcess.Emgu
 
         private Image<Bgr, byte> _leftOriginImage;  // 原始图像
         private Image<Bgra, byte> _hdrOriginImage;  // HDR待处理图像
-        private Image<Bgr, byte> temp;              // 图像修复的临时图片
+        private Bitmap temp;                        // 图像修复的临时图片
         private Image<Gray, byte> mask;             // 修复图片用Mask
 
         bool mouseDown = false;
@@ -98,10 +98,12 @@ namespace ImageProcess.Emgu
 
         private void MousePaint_Click(object sender, RoutedEventArgs e)
         {
-            temp = new Image<Bgr, byte>(_leftOriginImage.Width, _leftOriginImage.Height, new Bgr(0, 0, 0));
-            DisLeftPaint form = new DisLeftPaint(temp);
+            DisLeftPaint form;
+            temp = new Bitmap(_leftOriginImage.Width, _leftOriginImage.Height);
+            temp.MakeTransparent(Color.Black);
+            form = new DisLeftPaint(temp, _leftOriginImage);
             form.ShowDialog();
-            LeftImageDisplay.Source = BitmapSourceConvert.ToBitmapSource(temp + _leftOriginImage);
+            LeftImageDisplay.Source = BitmapSourceConvert.ToBitmapSource(new Image<Bgr, byte>(temp) + _leftOriginImage);
         }
 
         private void Inpaint_Click(object sender, RoutedEventArgs e)
@@ -114,8 +116,6 @@ namespace ImageProcess.Emgu
                 sw.Start();
                 RightImageDisplay.Source = BitmapSourceConvert.ToBitmapSource(_leftOriginImage.InPaint(mask, radius));
                 sw.Stop();
-                
-
                 Result.Text = $"演示图像修复完成，用时共{sw.Elapsed.TotalMilliseconds:F05}毫秒\r\n";
             }
             else
@@ -123,7 +123,7 @@ namespace ImageProcess.Emgu
                 Stopwatch sw = new Stopwatch();
                 try
                 {
-                    mask = temp.Convert<Gray, byte>();
+                    mask = new Image<Bgr, byte>(temp).Convert<Gray, byte>();
                 }
                 catch (Exception ex)
                 {
@@ -131,7 +131,7 @@ namespace ImageProcess.Emgu
                 }
                 double radius = double.Parse(InPaintArgs.Text);
                 sw.Start();
-                var tempPic = (temp + _leftOriginImage).InPaint(mask, radius);
+                var tempPic = (new Image<Bgr, byte>(temp) + _leftOriginImage).InPaint(mask, radius);
                 sw.Stop();
                 RightImageDisplay.Source = BitmapSourceConvert.ToBitmapSource(tempPic);
 

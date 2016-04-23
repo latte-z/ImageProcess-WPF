@@ -7,8 +7,9 @@
                   Title="Image Process Ver 1.0" 
                   LogoData="F1 M 24.9015,43.0378L 25.0963,43.4298C 26.1685,49.5853 31.5377,54.2651 38,54.2651C 44.4623,54.2651 49.8315,49.5854 50.9037,43.4299L 51.0985,43.0379C 51.0985,40.7643 52.6921,39.2955 54.9656,39.2955C 56.9428,39.2955 58.1863,41.1792 58.5833,43.0379C 57.6384,52.7654 47.9756,61.75 38,61.75C 28.0244,61.75 18.3616,52.7654 17.4167,43.0378C 17.8137,41.1792 19.0572,39.2954 21.0344,39.2954C 23.3079,39.2954 24.9015,40.7643 24.9015,43.0378 Z M 26.7727,20.5833C 29.8731,20.5833 32.3864,23.0966 32.3864,26.197C 32.3864,29.2973 29.8731,31.8106 26.7727,31.8106C 23.6724,31.8106 21.1591,29.2973 21.1591,26.197C 21.1591,23.0966 23.6724,20.5833 26.7727,20.5833 Z M 49.2273,20.5833C 52.3276,20.5833 54.8409,23.0966 54.8409,26.197C 54.8409,29.2973 52.3276,31.8106 49.2273,31.8106C 46.127,31.8106 43.6136,29.2973 43.6136,26.197C 43.6136,23.0966 46.127,20.5833 49.2273,20.5833 Z"
                   Style="{StaticResource BlankWindow}"
-                  MinHeight="768" Height="768" MinWidth="1280" Width="1280" WindowStyle="ThreeDBorderWindow" WindowState="Normal" FontFamily="Segoe UI Regular" FontSize="14" Margin="0">
+                  MinHeight="790" Height="790" MinWidth="1280" Width="1280" WindowStyle="ThreeDBorderWindow" WindowState="Normal" FontFamily="Segoe UI Regular" FontSize="14" Margin="0">
 
+    <!-- Title -->
     <Window.Resources>
         <Style x:Key="AppName" TargetType="TextBlock" >
             <Setter Property="FontSize" Value="14" />
@@ -27,6 +28,7 @@
         </Style>
     </Window.Resources>
 
+    <!-- MainXAML -->
     <Grid Margin="0 0 0 0">
         <Grid.RowDefinitions>
             <RowDefinition Height="22" />
@@ -54,6 +56,8 @@
         <Button Grid.Row="1" Grid.Column="3" Click="GetKeyBtn_Click" Width="Auto" HorizontalAlignment="Center" Content="获取" />
         <TextBlock Grid.Row="2" Grid.Column="1" VerticalAlignment="Top" Style="{StaticResource AppTitle}" Grid.ColumnSpan="2" />
         <TextBlock Grid.Row="3" Grid.Column="1" Text="请选择功能:" Margin="15, -3, 0, 0" VerticalAlignment="Center" />
+        
+        <!-- TabControl -->
         <TabControl Grid.Row="3" Grid.RowSpan="2" Grid.Column="1" Grid.ColumnSpan="3" TabStripPlacement="Left" Margin="0" Padding="0">
             <TabControl.Resources>
                 <Style TargetType="TabItem">
@@ -77,54 +81,57 @@
                     </Setter>
                 </Style>
             </TabControl.Resources>
-            <TabItem Header="「 EmguCV功能 」">
+            
+            <!-- Emgu CV -->
+            <TabItem Header="「 Emgu CV 功能 」">
                 <em:EmguCVIntro />
             </TabItem>
-            <TabItem Header="1) EmguCV 人脸检测">
+            <TabItem Header="1) 动态人脸检测">
                 <em:ImageBasicControl>
                     <em:FaceDetect />
                 </em:ImageBasicControl>
             </TabItem>
             
-            <TabItem Header="2) EmguCV 边缘提取">
+            <TabItem Header="2) 物体边缘提取">
                 <em:ImageBasicControl>
                     <em:GetEdge />
                 </em:ImageBasicControl>
             </TabItem>
 
-            <TabItem Header="3) EmguCV 模糊去噪">
+            <TabItem Header="3) 平滑模糊去噪">
                 <em:ImageBasicControl>
                     <em:SmoothImage />
                 </em:ImageBasicControl>
             </TabItem>
 
-            <TabItem Header="4) EmguCV 图像增强">
+            <TabItem Header="4) 图像基础增强">
                 <em:ImageBasicControl>
                     <em:BasicProcess />
                 </em:ImageBasicControl>
             </TabItem>
 
-            <!-- 以下是 Microsoft Oxford Project -->
-
-            <TabItem Header="「 MS Oxford功能 」">
+            <!-- Microsoft Oxford Project -->
+            <TabItem Header="「 MS Oxford 功能 」">
                 <em:OxfordIntro />
             </TabItem>
-            <TabItem Header="1) Oxford 人脸检测">
+            <TabItem Header="1) 人脸检测">
                 <uc:FunctionPanel>
-                    <uc:FaceDetection Description="{Binding FaceDetectionDescription}" Output=""/>
+                    <uc:FaceDetection Description="{Binding FaceDetectionDescription}" Output="" />
                 </uc:FunctionPanel>
             </TabItem>
-            <TabItem Header="2) Oxford 相似度检测">
+            <TabItem Header="2) 人脸相似度检测">
                 <uc:FunctionPanel>
                     <uc:FaceVerification Description="{Binding FaceVerificationDescription}" Output="" RenderTransformOrigin="0.5,0.5" Height="430" />
                 </uc:FunctionPanel>
             </TabItem>
+            
             <!-- 关于 -->
-            <TabItem Header="「 关于程序 」">
+            <TabItem Header="「 关于 」">
                 <em:ImageBasicControl>
                     <em:About />
                 </em:ImageBasicControl>
             </TabItem>
         </TabControl>
+        
     </Grid>
 </mui:ModernWindow>

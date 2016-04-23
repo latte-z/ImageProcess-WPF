@@ -24,5 +24,11 @@ namespace ImageProcess.Emgu
         {
             InitializeComponent();
         }
+
+        private void GetInformation_Click(object sender, RoutedEventArgs e)
+        {
+            // go to oxford website
+            System.Diagnostics.Process.Start("https://www.microsoft.com/cognitive-services");
+        }
     }
 }

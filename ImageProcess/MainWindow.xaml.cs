@@ -47,8 +47,8 @@ namespace ImageProcess
 
             SubscriptionKey = GetSubscriptionKeyFromIsolatedStorage();
 
-            AppName = "简易图像处理与人脸识别/比对";
-            AppTitle = "本程序使用了 EmguCV 和 MS Project Oxford 进行图片处理";
+            AppName = "PictureMator";
+            AppTitle = "EmguCV & Microsoft Cognitive Services";
             DataContext = this;
 
             FaceDetectionDescription = "选择一张个人（或多人）图片，文件将被上传至微软Azure服务器进行人脸检测";
@@ -181,18 +181,19 @@ namespace ImageProcess
         /// <param name="caller"></param>
         private void OnPropertyChanged<T>([CallerMemberName]string caller = null)
         {
-            var handler = PropertyChanged;
-            if (handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(caller));
-            }
+            //var handler = PropertyChanged;
+            //if (handler != null)
+            //{
+            //    handler(this, new PropertyChangedEventArgs(caller));
+            //}
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(caller));
         }
         #endregion Methods
 
         private void GetKeyBtn_Click(object sender, RoutedEventArgs e)
         {
-            // go to microsoft website
-            System.Diagnostics.Process.Start("https://www.projectoxford.ai/doc/general/subscription-key-mgmt");
+            // go to microsoft website https://www.projectoxford.ai/doc/general/subscription-key-mgmt
+            System.Diagnostics.Process.Start("https://www.microsoft.com/cognitive-services/en-us/sign-up");
         }
 
         private void SaveKey_Click(object sender, RoutedEventArgs e)
@@ -204,7 +205,7 @@ namespace ImageProcess
             }
             catch (System.Exception ex)
             {
-                MessageBox.Show("读取 Project Oxford Key 失败. 错误信息如下: " + ex.Message, "订阅秘钥", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"读取 Project Oxford Key 失败. 错误信息如下: { ex.Message }", "订阅秘钥", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -218,7 +219,7 @@ namespace ImageProcess
             }
             catch (System.Exception ex)
             {
-                MessageBox.Show("删除 Project Oxford Key 失败. 错误信息如下: " + ex.Message, "订阅秘钥", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"删除 Project Oxford Key 失败. 错误信息如下: { ex.Message }", "订阅秘钥", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

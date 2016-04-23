@@ -86,24 +86,12 @@ namespace ImageProcess.Controls
         /// <summary>
         /// Gets face detection results for image on the left
         /// </summary>
-        public ObservableCollection<Face> LeftResultCollection
-        {
-            get
-            {
-                return _leftResultCollection;
-            }
-        }
+        public ObservableCollection<Face> LeftResultCollection => _leftResultCollection;
 
         /// <summary>
         /// Gets max image size for UI rendering
         /// </summary>
-        public int MaxImageSize
-        {
-            get
-            {
-                return 300;
-            }
-        }
+        public int MaxImageSize => 300;
 
         /// <summary>
         /// Gets or sets output for UI rendering
@@ -124,13 +112,7 @@ namespace ImageProcess.Controls
         /// <summary>
         /// Gets face detection results for image on the right
         /// </summary>
-        public ObservableCollection<Face> RightResultCollection
-        {
-            get
-            {
-                return _rightResultCollection;
-            }
-        }
+        public ObservableCollection<Face> RightResultCollection => _rightResultCollection;
 
         /// <summary>
         /// Gets or sets selected face verification result
@@ -145,10 +127,7 @@ namespace ImageProcess.Controls
             set
             {
                 _verifyResult = value;
-                if (PropertyChanged != null)
-                {
-                    PropertyChanged(this, new PropertyChangedEventArgs("VerifyResult"));
-                }
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("VerifyResult"));
             }
         }
 
@@ -164,58 +143,58 @@ namespace ImageProcess.Controls
         private async void LeftImagePicker_Click(object sender, RoutedEventArgs e)
         {
             // Show image picker, show jpg type files only
-            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
-            dlg.DefaultExt = ".jpg";
-            dlg.Filter = "Image files(*.jpg) | *.jpg";
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog
+            {
+                DefaultExt = ".jpg",
+                Filter = "Image files(*.jpg) | *.jpg"
+            };
             var result = dlg.ShowDialog();
 
-            if (result.HasValue && result.Value)
+            if (!result.HasValue || !result.Value) return;
+            VerifyResult = string.Empty;
+
+            // User already picked one image
+            var pickedImagePath = dlg.FileName;
+            var imageInfo = UIHelper.GetImageInfoForRendering(pickedImagePath);
+            LeftImageDisplay.Source = new BitmapImage(new Uri(pickedImagePath));
+
+            // Clear last time detection results
+            LeftResultCollection.Clear();
+
+            Output = Output.AppendLine($"发送请求: 检测图片 {pickedImagePath} 中");
+            var sw = Stopwatch.StartNew();
+
+            // Call detection REST API, detect faces inside the image
+            using (var fileStream = File.OpenRead(pickedImagePath))
             {
-                VerifyResult = string.Empty;
-
-                // User already picked one image
-                var pickedImagePath = dlg.FileName;
-                var imageInfo = UIHelper.GetImageInfoForRendering(pickedImagePath);
-                LeftImageDisplay.Source = new BitmapImage(new Uri(pickedImagePath));
-
-                // Clear last time detection results
-                LeftResultCollection.Clear();
-
-                Output = Output.AppendLine(string.Format("发送请求: 检测图片 {0} 中", pickedImagePath));
-                var sw = Stopwatch.StartNew();
-
-                // Call detection REST API, detect faces inside the image
-                using (var fileStream = File.OpenRead(pickedImagePath))
+                try
                 {
-                    try
+
+                    MainWindow mainWindow = Window.GetWindow(this) as MainWindow;
+                    if (mainWindow == null) return;
+                    string subscriptionKey = mainWindow.SubscriptionKey;
+
+                    var faceServiceClient = new FaceServiceClient(subscriptionKey);
+                    var faces = await faceServiceClient.DetectAsync(fileStream);
+
+                    // Handle REST API calling error
+                    if (faces == null)
                     {
-
-                        MainWindow mainWindow = Window.GetWindow(this) as MainWindow;
-                        string subscriptionKey = mainWindow.SubscriptionKey;
-
-                        var faceServiceClient = new FaceServiceClient(subscriptionKey);
-                        var faces = await faceServiceClient.DetectAsync(fileStream);
-
-                        // Handle REST API calling error
-                        if (faces == null)
-                        {
-                            return;
-                        }
-
-                        Output = Output.AppendLine(string.Format("反馈:检测成功. 共发现 {0} 张脸 在图片 {1}", faces.Length, pickedImagePath));
-
-                        // Convert detection results into UI binding object for rendering
-                        foreach (var face in UIHelper.CalculateFaceRectangleForRendering(faces, MaxImageSize, imageInfo))
-                        {
-                            // Detected faces are hosted in result container, will be used in the verification later
-                            LeftResultCollection.Add(face);
-                        }
-                    }
-                    catch (ClientException ex)
-                    {
-                        Output = Output.AppendLine(string.Format("反馈: 出错啦 {0}. {1}", ex.Error.Code, ex.Error.Message));
                         return;
                     }
+
+                    Output = Output.AppendLine($"反馈:检测成功. 共发现 {faces.Length} 张脸 在图片 {pickedImagePath}");
+
+                    // Convert detection results into UI binding object for rendering
+                    foreach (var face in UIHelper.CalculateFaceRectangleForRendering(faces, MaxImageSize, imageInfo))
+                    {
+                        // Detected faces are hosted in result container, will be used in the verification later
+                        LeftResultCollection.Add(face);
+                    }
+                }
+                catch (ClientException ex)
+                {
+                    Output = Output.AppendLine($"反馈: 出错啦 {ex.Error.Code}. {ex.Error.Message}");
                 }
             }
         }
@@ -228,58 +207,59 @@ namespace ImageProcess.Controls
         private async void RightImagePicker_Click(object sender, RoutedEventArgs e)
         {
             // Show image picker, show jpg type files only
-            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
-            dlg.DefaultExt = ".jpg";
-            dlg.Filter = "Image files(*.jpg) | *.jpg";
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog
+            {
+                DefaultExt = ".jpg",
+                Filter = "Image files(*.jpg) | *.jpg"
+            };
             var result = dlg.ShowDialog();
 
-            if (result.HasValue && result.Value)
+            if (!result.HasValue || !result.Value) return;
+            VerifyResult = string.Empty;
+
+            // User already picked one image
+            var pickedImagePath = dlg.FileName;
+            var imageInfo = UIHelper.GetImageInfoForRendering(pickedImagePath);
+            RightImageDisplay.Source = new BitmapImage(new Uri(pickedImagePath));
+
+            // Clear last time detection results
+            RightResultCollection.Clear();
+
+            Output = Output.AppendLine($"发送请求: 检测图片 {pickedImagePath} 中");
+            var sw = Stopwatch.StartNew();
+
+            // Call detection REST API, detect faces inside the image
+            using (var fileStream = File.OpenRead(pickedImagePath))
             {
-                VerifyResult = string.Empty;
-
-                // User already picked one image
-                var pickedImagePath = dlg.FileName;
-                var imageInfo = UIHelper.GetImageInfoForRendering(pickedImagePath);
-                RightImageDisplay.Source = new BitmapImage(new Uri(pickedImagePath));
-
-                // Clear last time detection results
-                RightResultCollection.Clear();
-
-                Output = Output.AppendLine(string.Format("发送请求: 检测图片 {0} 中", pickedImagePath));
-                var sw = Stopwatch.StartNew();
-
-                // Call detection REST API, detect faces inside the image
-                using (var fileStream = File.OpenRead(pickedImagePath))
+                try
                 {
-                    try
+                    MainWindow mainWindow = Window.GetWindow(this) as MainWindow;
+                    if (mainWindow == null) return;
+                    string subscriptionKey = mainWindow.SubscriptionKey;
+
+                    var faceServiceClient = new FaceServiceClient(subscriptionKey);
+
+                    var faces = await faceServiceClient.DetectAsync(fileStream);
+
+                    // Handle REST API calling error
+                    if (faces == null)
                     {
-                        MainWindow mainWindow = Window.GetWindow(this) as MainWindow;
-                        string subscriptionKey = mainWindow.SubscriptionKey;
-
-                        var faceServiceClient = new FaceServiceClient(subscriptionKey);
-
-                        var faces = await faceServiceClient.DetectAsync(fileStream);
-
-                        // Handle REST API calling error
-                        if (faces == null)
-                        {
-                            return;
-                        }
-
-                        Output = Output.AppendLine(string.Format("反馈:检测成功. 共发现 {0} 张脸 在图片 {1}", faces.Length, pickedImagePath));
-
-                        // Convert detection results into UI binding object for rendering
-                        foreach (var face in UIHelper.CalculateFaceRectangleForRendering(faces, MaxImageSize, imageInfo))
-                        {
-                            // Detected faces are hosted in result container, will be used in the verification later
-                            RightResultCollection.Add(face);
-                        }
-                    }
-                    catch (ClientException ex)
-                    {
-                        Output = Output.AppendLine(string.Format("反馈: 出错啦 {0}. {1}", ex.Error.Code, ex.Error.Message));
                         return;
                     }
+
+                    Output = Output.AppendLine($"反馈:检测成功. 共发现 {faces.Length} 张脸 在图片 {pickedImagePath}");
+
+                    // Convert detection results into UI binding object for rendering
+                    foreach (var face in UIHelper.CalculateFaceRectangleForRendering(faces, MaxImageSize, imageInfo))
+                    {
+                        // Detected faces are hosted in result container, will be used in the verification later
+                        RightResultCollection.Add(face);
+                    }
+                }
+                catch (ClientException ex)
+                {
+                    Output = Output.AppendLine($"反馈: 出错啦 {ex.Error.Code}. {ex.Error.Message}");
+                    return;
                 }
             }
         }
@@ -299,7 +279,7 @@ namespace ImageProcess.Controls
                 var faceId1 = LeftResultCollection[0].FaceId;
                 var faceId2 = RightResultCollection[0].FaceId;
 
-                Output = Output.AppendLine(string.Format("发送请求: 比对检测 面部 {0} 和 {1}", faceId1, faceId2));
+                Output = Output.AppendLine($"发送请求: 比对检测 面部 {faceId1} 和 {faceId2}");
 
                 // Call verify REST API with two face id
                 try
@@ -312,18 +292,18 @@ namespace ImageProcess.Controls
 
                     // Verification result contains IsIdentical (true or false) and Confidence (in range 0.0 ~ 1.0),
                     // here we update verify result on UI by VerifyResult binding
-                    VerifyResult = string.Format("{0} ({1:0.0})", res.IsIdentical ? "相似" : "不相似", res.Confidence);
-                    Output = Output.AppendLine(string.Format("反馈: 比对检测完毕. 面部 {0} 和 {1} {2} 同一个人", faceId1, faceId2, res.IsIdentical ? "属于" : "不属于"));
+                    VerifyResult = $"{(res.IsIdentical ? "相似" : "不相似")} ({res.Confidence:0.0})";
+                    Output = Output.AppendLine(
+                        $"反馈: 比对检测完毕. 面部 {faceId1} 和 {faceId2} {(res.IsIdentical ? "属于" : "不属于")} 同一个人");
                 }
                 catch (ClientException ex)
                 {
-                    Output = Output.AppendLine(string.Format("反馈: 出错啦 {0}. {1}", ex.Error.Code, ex.Error.Message));
-                    return;
+                    Output = Output.AppendLine($"反馈: 出错啦 {ex.Error.Code}. {ex.Error.Message}");
                 }
             }
             else
             {
-                MessageBox.Show("比对检测仅支持两张个人照片，请检查您的选择.", "Warning", MessageBoxButton.OK);
+                MessageBox.Show("比对检测仅支持两张个人照片，请检查您的选择.", "出错了", MessageBoxButton.OK);
             }
         }
 

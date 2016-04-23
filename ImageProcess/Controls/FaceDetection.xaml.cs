@@ -91,13 +91,7 @@ namespace ImageProcess.Controls
         /// <summary>
         /// Gets face detection results
         /// </summary>
-        public ObservableCollection<Face> DetectedFaces
-        {
-            get
-            {
-                return _detectedFaces;
-            }
-        }
+        public ObservableCollection<Face> DetectedFaces => _detectedFaces;
 
         /// <summary>
         /// Gets or sets face detection results in text string
@@ -112,23 +106,14 @@ namespace ImageProcess.Controls
             set
             {
                 _detectedResultsInText = value;
-                if (PropertyChanged != null)
-                {
-                    PropertyChanged(this, new PropertyChangedEventArgs("DetectedResultsInText"));
-                }
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("DetectedResultsInText"));
             }
         }
 
         /// <summary>
         /// Gets constant maximum image size for rendering detection result
         /// </summary>
-        public int MaxImageSize
-        {
-            get
-            {
-                return 300;
-            }
-        }
+        public int MaxImageSize => 300;
 
         /// <summary>
         /// Gets or sets output for rendering
@@ -149,13 +134,7 @@ namespace ImageProcess.Controls
         /// <summary>
         /// Gets face detection results
         /// </summary>
-        public ObservableCollection<Face> ResultCollection
-        {
-            get
-            {
-                return _resultCollection;
-            }
-        }
+        public ObservableCollection<Face> ResultCollection => _resultCollection;
 
         /// <summary>
         /// Gets or sets image path for rendering and detecting
@@ -170,10 +149,7 @@ namespace ImageProcess.Controls
             set
             {
                 _selectedFile = value;
-                if (PropertyChanged != null)
-                {
-                    PropertyChanged(this, new PropertyChangedEventArgs("SelectedFile"));
-                }
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("SelectedFile"));
             }
         }
 
@@ -189,65 +165,65 @@ namespace ImageProcess.Controls
         private async void ImagePicker_Click(object sender, RoutedEventArgs e)
         {
             // Show file picker dialog
-            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
-            dlg.DefaultExt = ".jpg";
-            dlg.Filter = "Image files(*.jpg) | *.jpg";
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog
+            {
+                DefaultExt = ".jpg",
+                Filter = "Image files(*.jpg) | *.jpg"
+            };
             var result = dlg.ShowDialog();
 
-            if (result.HasValue && result.Value)
+            if (!result.HasValue || !result.Value) return;
+            // User picked one image
+            var imageInfo = UIHelper.GetImageInfoForRendering(dlg.FileName);
+            SelectedFile = dlg.FileName;
+
+            // Clear last detection result
+            ResultCollection.Clear();
+            DetectedFaces.Clear();
+            DetectedResultsInText = "正在检测中...";
+
+            Output = Output.AppendLine($"发送请求: 检测图片 {SelectedFile} 中");
+            var sw = Stopwatch.StartNew();
+
+            // Call detection REST API
+            using (var fileStream = File.OpenRead(SelectedFile))
             {
-                // User picked one image
-                var imageInfo = UIHelper.GetImageInfoForRendering(dlg.FileName);
-                SelectedFile = dlg.FileName;
-
-                // Clear last detection result
-                ResultCollection.Clear();
-                DetectedFaces.Clear();
-                DetectedResultsInText = string.Format("正在检测中...");
-
-                Output = Output.AppendLine(string.Format("发送请求: 检测图片 {0} 中", SelectedFile));
-                var sw = Stopwatch.StartNew();
-
-                // Call detection REST API
-                using (var fileStream = File.OpenRead(SelectedFile))
+                try
                 {
-                    try
+                    MainWindow mainWindow = Window.GetWindow(this) as MainWindow;
+                    if (mainWindow == null) return;
+                    string subscriptionKey = mainWindow.SubscriptionKey;
+
+                    var faceServiceClient = new FaceServiceClient(subscriptionKey);
+                    Microsoft.ProjectOxford.Face.Contract.Face[] faces = await faceServiceClient.DetectAsync(fileStream, false, true, true, false);
+                    Output = Output.AppendLine($"反馈:检测成功. 共发现 {faces.Length} 张脸 在图片 {SelectedFile}");
+
+                    DetectedResultsInText = $"一共检测到了 {faces.Length} 张面孔";
+
+                    foreach (var face in faces)
                     {
-                        MainWindow mainWindow = Window.GetWindow(this) as MainWindow;
-                        string subscriptionKey = mainWindow.SubscriptionKey;
-
-                        var faceServiceClient = new FaceServiceClient(subscriptionKey);
-                        Microsoft.ProjectOxford.Face.Contract.Face[] faces = await faceServiceClient.DetectAsync(fileStream, false, true, true, false);
-                        Output = Output.AppendLine(string.Format("反馈:检测成功. 共发现 {0} 张脸 在图片 {1}", faces.Length, SelectedFile));
-
-                        DetectedResultsInText = string.Format("一共检测到了 {0} 张面孔", faces.Length);
-
-                        foreach (var face in faces)
+                        DetectedFaces.Add(new Face()
                         {
-                            DetectedFaces.Add(new Face()
-                            {
-                                ImagePath = SelectedFile,
-                                Left = face.FaceRectangle.Left,
-                                Top = face.FaceRectangle.Top,
-                                Width = face.FaceRectangle.Width,
-                                Height = face.FaceRectangle.Height,
-                                FaceId = face.FaceId.ToString(),
-                                Gender = string.Format("{0}", face.Attributes.Gender.Equals("female") ? "女性" : "男性"),
-                                Age = string.Format("大约 {0:#} 岁", face.Attributes.Age),
-                            });
-                        }
-
-                        // Convert detection result into UI binding object for rendering
-                        foreach (var face in UIHelper.CalculateFaceRectangleForRendering(faces, MaxImageSize, imageInfo))
-                        {
-                            ResultCollection.Add(face);
-                        }
+                            ImagePath = SelectedFile,
+                            Left = face.FaceRectangle.Left,
+                            Top = face.FaceRectangle.Top,
+                            Width = face.FaceRectangle.Width,
+                            Height = face.FaceRectangle.Height,
+                            FaceId = face.FaceId.ToString(),
+                            Gender = $"{(face.Attributes.Gender.Equals("female") ? "女性" : "男性")}",
+                            Age = $"大约 {face.Attributes.Age:#} 岁",
+                        });
                     }
-                    catch (ClientException ex)
+
+                    // Convert detection result into UI binding object for rendering
+                    foreach (var face in UIHelper.CalculateFaceRectangleForRendering(faces, MaxImageSize, imageInfo))
                     {
-                        Output = Output.AppendLine(string.Format("反馈:出错啦: {0}. {1}", ex.Error.Code, ex.Error.Message));
-                        return;
+                        ResultCollection.Add(face);
                     }
+                }
+                catch (ClientException ex)
+                {
+                    Output = Output.AppendLine($"反馈:出错啦: {ex.Error.Code}. {ex.Error.Message}");
                 }
             }
         }

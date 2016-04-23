@@ -19,6 +19,7 @@
             <RowDefinition Height="45" />
             <RowDefinition Height="118" />
         </Grid.RowDefinitions>
+        
         <!-- Right Pic Display -->
         <Grid Grid.Column="0" Grid.Row="0">
             <Image x:Name="LeftImageDisplay" Height="456" Width="456" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,10,10,10" Source="/Assets/default.jpg" />

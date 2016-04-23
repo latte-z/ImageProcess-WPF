@@ -223,8 +223,7 @@ namespace ImageProcess.Emgu
             }
         }
 
+
         #endregion btn_click
-
-
     }
 }

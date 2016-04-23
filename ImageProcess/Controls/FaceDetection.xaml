@@ -40,7 +40,7 @@
                         <Setter Property="Source" Value="{Binding SelectedFile, ElementName=FaceDetectionPane}" />
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding SelectedFile, ElementName=FaceDetectionPane }" Value="{x:Null}">
-                                <Setter Property="Source" Value="/ImageProcess;component/Assets/default.jpg" />
+                                <Setter Property="Source" Value="/Assets/default.jpg" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
